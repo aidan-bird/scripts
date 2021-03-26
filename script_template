@@ -1,0 +1,72 @@
+#!/bin/sh
+
+# shell script patterns and notes on scripting 
+
+# Aidan Bird YEAR
+# 
+# DESCRIPTION
+#
+
+set -e # exit if any commands fail
+cmd_usage="usage: $(basename "$0") PUT USAGE HERE"
+>&2 echo "$cmd_usage"
+
+# save wd (put at start of script)
+output_dir="$(realpath .)"
+
+# variable that is set to argument or uses default value
+var1="default value"
+[ "$3" != '' ] && var1=$3
+
+# checking for minimum number of arguments
+[ $# -lt 2 ] && >&2 echo "$cmd_usage" && exit -1
+[ $# -lt 2 ] && echo "$cmd_usage" && exit -1
+
+# iterate over all lines
+IFS=$'\n'
+for x in $list
+do
+done
+
+# get file name
+doc_name="$(basename "$1" '.tex')"
+
+# get dir name
+proj_path="$(dirname "$1")"
+
+# make temporary directory; delete directory when script terminates
+temp_dir=$(mktemp -d)
+trap "rm -rf $temp_dir" 0 2 3 15
+
+# cd to a file
+cd "$(find "$temp_dir" -type f -name "$doc_name.tex" -exec dirname {} \; -quit)"
+
+# copy a file
+find . -type f -name "$doc_name.pdf" -exec cp {} "$output_dir" \; -quit
+
+# exit if last command failed
+[ $? != 0 ] && echo "Can't compile document!" && exit -1
+
+# check for running process
+pgrep -f "$READER .*$doc_name\.pdf"
+[ $? != 0 ] && not running || is running
+
+#
+files=$(printf '%q' "$1" | xargs -I '{}' find '{}' -type f -name "*.flac")
+IFS=$'\n'
+for x in $files
+do
+done
+
+# exit 0 = script finished with 0 errors
+# exit -1 = there were errors
+exit 0
+
+# OTHER NOTES
+# 
+# no need to use 'for ls *', use 'for ./*' instead
+#
+# do './*.xyz' instead of '*.xyz'; never start globs with "*" or "?".
+# 
+# $((arithmetic expression))
+
