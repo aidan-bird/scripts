@@ -9,7 +9,7 @@ progname="$(basename "$0")"
 sec_path=~/sec
 [ "$1" != '' ] && sec_path="$1"
 cmd_usage="usage: $progname [sec path = ~/sec]"
-keys="$(find ~/sec/key -maxdepth 1 -type f -exec file {} \+ | grep 'OpenSSH private key' \
+keys="$(find ~/sec/key -type f -exec file {} \+ | grep 'OpenSSH private key' \
     | sed 's/: *OpenSSH private key//')"
 [ "$keys" = '' ] && exit 1
 key_select="$(echo "$keys" | fzf)" || exit 1
