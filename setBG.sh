@@ -5,5 +5,5 @@
 # set the desktop wallpaper
 #
 
-[ "$#" == 1 ] && cp "$1" ~/.config/wall.png
+[ "$#" -eq 1 ] && cp "$1" ~/.config/wall.png
 xwallpaper --stretch ~/.config/wall.png

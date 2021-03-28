@@ -3,7 +3,7 @@
 
 cmd_usage="usage: $(basename "$0") [MOUNT PATH]"
 
-if [ $# == 0 ]
+if [ $# -eq 0 ]
 then
     echo "$cmd_usage"
     simple-mtpfs -l

@@ -8,7 +8,7 @@
 use_html=0
 MEM=$(free -m | awk 'NR==2{printf "%.1f", $3/1024 }')
 
-if [ use_html == 1 ]
+if [ $use_html -eq 1 ]
 then
     # for use in i3
     # DEPRECATED

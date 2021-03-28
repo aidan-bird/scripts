@@ -8,13 +8,5 @@
 
 todo_list_path=~/doc/TODO.txt
 
-if [ "$1" = "e" ]
-then
-    $EDITOR $todo_list_path
-else
-    list="$(cal -3)"$'\n'
-    list+=$'\t'"$(date)"$'\n'
-    list+="$(cat $todo_list_path)"
-    echo "$list" | less -
-fi
-
+[ "$1" = "e" ] && $EDITOR "$todo_list_path" || \
+    echo -e "$(cal -3)\n\t$(date)\n$(cat "$todo_list_path")" | less -

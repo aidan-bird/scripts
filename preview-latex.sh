@@ -13,12 +13,13 @@
 # make it extendable for use in other scripts. this will be used for caching
 #
 
+prog="$(basename "$0")"
 output_path=/tmp
-cmd_usage="usage: $(basename "$0") [Path to latex file]"
-[ $# -lt 1 ] && echo "$cmd_usage" && exit -1
+cmd_usage="usage: $prog [Path to latex file]"
+[ $# -lt 1 ] && { echo "$cmd_usage"; exit 1; }
 doc_name="$(basename "$1" '.tex')"
 compile-latex.sh "$1" "$output_path"
-[ $? != 0 ] && exit -1
+[ $? != 0 ] && exit 1
 pgrep -f "$READER .*$doc_name\.pdf"
 if [ $? != 0 ]
 then

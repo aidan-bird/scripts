@@ -1,4 +1,4 @@
-#/bin/sh
+#!/bin/sh
 
 # Aidan Bird 2021
 # 

@@ -19,11 +19,11 @@ var1="default value"
 [ "$3" != '' ] && var1=$3
 
 # checking for minimum number of arguments
-[ $# -lt 2 ] && >&2 echo "$cmd_usage" && exit -1
-[ $# -lt 2 ] && echo "$cmd_usage" && exit -1
+[ $# -lt 2 ] && >&2 echo "$cmd_usage" && exit 1
+[ $# -lt 2 ] && echo "$cmd_usage" && exit 1
 
 # iterate over all lines
-IFS=$'\n'
+IFS="$(printf "\nx")"
 for x in $list
 do
 done
@@ -45,7 +45,7 @@ cd "$(find "$temp_dir" -type f -name "$doc_name.tex" -exec dirname {} \; -quit)"
 find . -type f -name "$doc_name.pdf" -exec cp {} "$output_dir" \; -quit
 
 # exit if last command failed
-[ $? != 0 ] && echo "Can't compile document!" && exit -1
+[ $? != 0 ] && echo "Can't compile document!" && exit 1
 
 # check for running process
 pgrep -f "$READER .*$doc_name\.pdf"
@@ -53,13 +53,13 @@ pgrep -f "$READER .*$doc_name\.pdf"
 
 #
 files=$(printf '%q' "$1" | xargs -I '{}' find '{}' -type f -name "*.flac")
-IFS=$'\n'
+IFS="$(printf "\nx")"
 for x in $files
 do
 done
 
 # exit 0 = script finished with 0 errors
-# exit -1 = there were errors
+# exit 1 = there were errors
 exit 0
 
 # OTHER NOTES
