@@ -4,6 +4,9 @@
 # 
 # compile and setup a debugging environment for a c source file
 # subsequent invocations of make will be aware of any updates to the source file
+# TODO unfinished script
+
+exit 1
 
 rm -rf /run/user/$(id -u)/$(basename $0)*
 envroot=$(mktemp -dt "$(basename $0).XXXXXXXX" --tmpdir=/run/user/$(id -u))

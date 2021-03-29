@@ -9,6 +9,6 @@ then
     simple-mtpfs -l
     exit 0
 fi
-simple-mtpfs -l | fzf | awk '{print $1}' | tr ':' ' ' | xargs -I{} simple-mtpfs --device {} $1
+simple-mtpfs -l | fzf | awk '{print $1}' | tr ':' ' ' | xargs -I{} simple-mtpfs --device {} "$1"
 exit 0
 

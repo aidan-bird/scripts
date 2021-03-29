@@ -5,4 +5,4 @@
 # open discord's web app
 #
 
-nohup $BROWSER discordapp.com/login >/dev/null 2>&1 &
+nohup "$BROWSER" "discordapp.com/login" >/dev/null 2>&1 &

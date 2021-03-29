@@ -14,8 +14,9 @@ IFS="$(printf "\nx")"
 for x in $files
 do
     filename=$(echo "$x" | sed "s/.$src_ext//")
-    ffmpeg -i $filename.$src_ext -ab 320k -map_metadata 0 -id3v2_version 3 $filename.mp3
-    [ $? -ne 0 ] && { echo "$prog: Failed to convert $filename.$src_ext! Quitting."; exit 1; }
+    ffmpeg -i "$filename.$src_ext" -ab 320k -map_metadata 0 -id3v2_version 3 \
+        "$filename.mp3" || { echo "$prog: Failed to convert $filename.$src_ext! Quitting."; \
+        exit 1; }
 done
-rm *.$src_ext
+# rm ./*.$src_ext
 exit 0

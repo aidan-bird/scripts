@@ -5,24 +5,20 @@
 # fix broken music file names
 #
 
+src_wd="$(pwd)"
 prog="$(basename "$0")"
-cmd_usage="usage: $prog [file extension] [music directory path] [OPTIONAL: no clobber -n]"
+cmd_usage="usage: $prog [file extension (not including the '.')] [music directory path]"
 file_ext="$1"
-cpy_path="$(id -u)$prog"
 src_path="$2" 
-
 [ $# -lt 2 ] && { echo "$cmd_usage"; exit 1; }
-[ "$3" = "-n" ] && cp -r "$src_path" "$cpy_path" || cpy_path=$src_path
-cd "$cpy_path"
-for x in *$file_ext
-do
-    song_name=$(exiftool "$x" | grep 'Title ' | sed 's/Title.*: //')
-    echo "$prog: renaming $x to $song_name$file_ext"
-    mv -n "$x" "$song_name$file_ext"
-done
-file=$(find . -name '*.flac' -print -quit)
-albumName=$(echo "$file" | xargs -I '{}' exiftool '{}' | grep 'Album ' | sed 's/Album.*: //')
-albumArtistName=$(echo "$file" | xargs -I '{}' exiftool '{}' | grep 'Albumartist ' | sed 's/Albumartist.*: //')
-cd ..
-mv -n "$cpy_path" "$albumArtistName - $albumName"
+tmp_dir="$(mktemp -d)" \
+    || { echo "$prog: cannot create temporary directory"; exit 1; }
+trap "rm -rf $tmp_dir" 0 2 3 15
+cp -r "$src_path"/* "$tmp_dir" \
+    || { echo "$prog: cannot copy files to temporary directory"; exit 1; }
+find "$tmp_dir" -name "*.$file_ext" -print0 | xargs -P 0 -o -0 -I '{}' \
+    sh -c "fname=\"\$(exiftool \"{}\" | grep -i title | sed -e \"s/Title.*: //\").$file_ext\"; 
+    echo \"$prog: renaming '\$(basename \"{}\")' to '\$fname'\";
+    mv \"{}\" $tmp_dir/\"\$fname\";"
+cp -r "$tmp_dir" "$src_path.norm"
 exit 0

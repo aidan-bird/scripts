@@ -9,5 +9,5 @@ TEXT=$(mpc current -f "[[%artist% - ]%title%]|[%file%]")
 if [ -n "$TEXT" ]
 then
     STATUS=$(mpc status | grep -q 'playing' || echo 'paused: ')
-    echo $STATUS$TEXT
+    echo "$STATUS$TEXT"
 fi

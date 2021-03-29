@@ -15,5 +15,5 @@ then
     [ "$TEMPS" -ge 60 ] && color="#FF0000" || color="#FFFFFF"
     echo  "<span color='$color'> CPU $TEMPS°C</span>"
 else
-    echo  CPU $TEMPS°C
+    echo "CPU $TEMPS°C"
 fi
