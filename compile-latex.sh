@@ -1,7 +1,6 @@
 #!/bin/sh
 
-# Aidan Bird 2021
-#
+# Aidan Bird 2021 
 # compile a latex project 
 #
 
@@ -27,8 +26,8 @@ biber --input-directory "$src_dir" --output-directory "$src_dir" "$doc_name" \
     || echo "$prog: Can't compile bibliography!"
 pdflatex -halt-on-error -output-directory="$src_dir" "$doc_name.tex" \
     || { echo "$prog: Can't compile document (pass 2)!"; exit 1; }
-pdflatex -halt-on-error -output-directory="$src_dir" "$doc_name.tex" \
-    || { echo "$prog: Can't compile document (pass 3)!"; exit 1; }
+# pdflatex -halt-on-error -output-directory="$src_dir" "$doc_name.tex" \
+#     || { echo "$prog: Can't compile document (pass 3)!"; exit 1; }
 find . -type f -name "$doc_name.pdf" -exec cp {} "$output_dir" \; -quit
 echo "$prog: copied $doc_name.pdf to $output_dir/$doc_name.pdf"
 exit 0
