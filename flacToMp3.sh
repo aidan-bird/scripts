@@ -16,7 +16,7 @@ tmp_dir="$(mktemp -d)" \
 trap "rm -rf $tmp_dir" 0 2 3 15
 cp -r "$src_path"/* "$tmp_dir" \
     || { echo "$prog: cannot copy files to temporary directory"; exit 1; }
-find "$tmp_dir" -name "*.$file_ext" -print0 | xargs -P 0 -o -0 -I '{}' \
+LC_ALL=C find "$tmp_dir" -name "*.$file_ext" -print0 | xargs -P 0 -o -0 -I '{}' \
     sh -c "fname=\"\$(echo \"{}\" | sed -e \"s/\.$file_ext$/.mp3/\")\"; 
     ffmpeg -i \"{}\" -ab 320k -map_metadata 0 -id3v2_version 3 \"\$fname\";
     rm \"{}\";"
