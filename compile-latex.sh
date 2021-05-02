@@ -5,10 +5,10 @@
 #
 
 prog="$(basename "$0")"
-output_dir="$(realpath .)"
 cmd_usage="usage: $(basename "$0") [Path to latex file] [OPTIONAL Output Directory]"
 [ $# -lt 1 ] && { echo "$cmd_usage"; exit 1; }
-[ "$2" != '' ] && output_dir="$(realpath "$2")"
+[ "$2" != '' ] && { output_dir="$(realpath "$2")"; } \
+    || { output_dir="$(realpath .)"; }
 doc_name="$(basename "$1" '.tex')"
 proj_path="$(dirname "$1")"
 temp_dir=$(mktemp -d)
