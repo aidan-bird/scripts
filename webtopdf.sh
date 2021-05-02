@@ -5,7 +5,7 @@
 # TRY to download a webpage and convert it into a pdf
 #
 
-source "$(dirname "$0")/autils.sh"
+. "$(dirname "$0")/autils.sh"
 MAINFONT='Latin Modern Math'
 prog="$(basename "$0")"
 cmd_usage="usage: $prog [link to webpage] [OPTIONAL output path = .]"

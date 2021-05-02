@@ -10,7 +10,7 @@
 
 # TODO caching for a speed up
 
-source "$(dirname "$0")/autils.sh"
+. "$(dirname "$0")/autils.sh"
 prog="$(basename "$0")"
 cmd_usage="usage: $prog [image path] [OPTIONAL -o output file] 
     [OPTIONAL -t title] [OPTIONAL -a author] 
