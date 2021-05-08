@@ -7,11 +7,13 @@
 #
 # most of this script involves detecting the album art
 #
+# prints the id of the emitted notification
+#
 
 . "$(dirname "$0")/autils.sh"
 music_dir="/sftp/Music"
-notification_category="music_playing"
-notification_timeout=2000
+notification_base_cmd="dunstify -u normal -t 2000 -h \
+    string:x-dunst-stack-tag:test"
 prog="$(basename "$0")"
 current_song="$(mpc current -f "[[%artist% - ]%title%]|[%file%]")"
 [ -z "$current_song" ] && { exit 1; }
@@ -26,12 +28,10 @@ emitNotification() {
     case $# in
         1)
             # with no cover
-            notify-send -c "$notification_category" \
-                -t "$notification_timeout" "🎵$1"
+            $notification_base_cmd "🎵$1"
             ;;
         2)
-            notify-send -c "$notification_category" \
-                -t "$notification_timeout" -i "$2" "🎵$1"
+            $notification_base_cmd -i "$2" "🎵$1"
             ;;
     esac
 }
@@ -56,7 +56,6 @@ then
     case "$(echo "$image_files" | wc -l)" in
         0)
             # emit with no cover
-            echo ""
             emitNotification "$current_song"
             ;;
         1)
@@ -65,12 +64,14 @@ then
             ;;
         *)
             # try to select the most appropriate image file
-            guess="$(echo "$image_files" | grep -i -s -m 1 -e "cover" -e "folder" -e "image")"
+            guess="$(echo "$image_files" | grep -i -s -m 1 -e "cover" \
+                -e "folder" -e "image")"
             # using the album name
             # guess="$(echo "$image_files" | grep -i -s -m 1 -E \
             #     "cover|folder|image|$(echo "$album_root" | xargs -I '{}' \
             #     printf "%q" '{}' | sed "s/^'//;s/'$//;").*")"
-            [ -z "$guess" ] || { emitNotification "$current_song" "$guess"; exit 0; }
+            [ -z "$guess" ] || { emitNotification "$current_song" "$guess"; \
+                exit 0; }
             # album covers are usually square, try to use square images
             guess="$(echo "$image_files" | xargs -I '{}' -P 0 sh -c \
                 "echo \"\$(echo \$(exiftool -s -P -\"ImageWidth\" \
