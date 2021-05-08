@@ -1,8 +1,17 @@
 #!/bin/sh
+
+# Aidan Bird 2021
+# 
+# emit a desktop notification showing the name of the currently 
+# playing song + album art
+#
+# most of this script involves detecting the album art
+#
+
 . "$(dirname "$0")/autils.sh"
 music_dir="/sftp/Music"
 notification_category="music_playing"
-notification_timeout=2500
+notification_timeout=2000
 prog="$(basename "$0")"
 current_song="$(mpc current -f "[[%artist% - ]%title%]|[%file%]")"
 [ -z "$current_song" ] && { exit 1; }
