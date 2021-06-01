@@ -7,8 +7,6 @@
 #
 # most of this script involves detecting the album art
 #
-# prints the id of the emitted notification
-#
 
 . "$(dirname "$0")/autils.sh"
 music_dir="/sftp/Music"
