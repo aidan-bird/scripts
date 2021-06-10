@@ -42,3 +42,35 @@ eldestChild() {
     return 0
 }
 
+# $1 = input path
+# $2 = file extension
+# $3 = default file name (default is "default")
+# 
+# Returns the absolute path to a file used for script output.
+#
+# If the input path terminates with a file + extension, then the return value
+# will terminate with the given file + extension.
+#
+# If the input path terminate with a directory (no extension) then the return
+# value will terminate with the given directory.
+#
+# If no input path is given then the function returns 
+# 'cwd/default_file_name'
+# 
+getOutputFilePath() {
+    [ "$3" != '' ] && { file_name="$3"; } || { file_name="default"; }
+    if [ "$1" != '' ]
+    then
+        echo "$1" | grep -m 1 -s -q ".$2\$"
+        if [ $? == 0 ]
+        then
+            echo "$(realpath "$1")"
+        else
+            echo "$(realpath "$1")/$file_name.$2"
+        fi
+    else
+        echo "$(realpath .)/$file_name.$2"
+    fi
+    return 0
+}
+

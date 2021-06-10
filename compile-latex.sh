@@ -5,22 +5,12 @@
 # compile a latex project 
 #
 
+. "$(dirname "$0")/autils.sh"
 prog="$(basename "$0")"
 cmd_usage="usage: $(basename "$0") [Path to latex file] [OPTIONAL output DIRECTORY or FILE.pdf]"
 [ $# -lt 1 ] && { echo "$cmd_usage"; exit 1; }
 doc_name="$(basename "$1" '.tex')"
-if [ "$2" != '' ]
-then
-    echo "$2" | grep -m 1 -s -q '.pdf$'
-    if [ $? == 0 ]
-    then
-        output_dir="$(realpath "$2")"
-    else
-        output_dir="$(realpath "$2")/$doc_name.pdf"
-    fi
-else
-    output_dir="$(realpath .)/$doc_name.pdf"
-fi
+output_dir="$(getOutputFilePath "$2" ".pdf" "$doc_name")"
 proj_path="$(dirname "$1")"
 temp_dir=$(mktemp -d)
 trap "rm -rf $temp_dir" 0 2 3 15
