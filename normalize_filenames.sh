@@ -18,7 +18,6 @@ cp -r "$src_path"/* "$tmp_dir" \
     || { echo "$prog: cannot copy files to temporary directory"; exit 1; }
 LC_ALL=C find "$tmp_dir" -type f -name "*.$file_ext" -print0 | xargs -P 0 -o -0 -I '{}' \
      sh -c "fname=\"\$(exiftool \"{}\" | grep -i title | sed -e \"s/Title.*: //\").$file_ext\"; 
-     echo \"$prog: renaming '\$(basename \"{}\")' to '\$fname'\";
-     mv \"{}\" $tmp_dir/\"\$fname\";"
+     mv -v \"{}\" $tmp_dir/\"\$fname\";"
 cp -r "$tmp_dir" "$src_path.norm"
 exit 0

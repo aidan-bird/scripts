@@ -50,7 +50,7 @@ album_root="$(eldestChild "$file_path" "$music_dir")"
 if [ $? -eq 0 ]
 then
     image_files="$(find "$album_root" -type f -exec file -0 {} \+ \
-        | grep -a 'image data' | cut -d '' -f1)"
+        | grep -a 'image data' | cut -d '' -f1 | sort)"
     case "$(echo "$image_files" | wc -l)" in
         0)
             # emit with no cover
