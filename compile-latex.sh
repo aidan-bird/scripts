@@ -6,6 +6,7 @@
 #
 
 . "$(dirname "$0")/autils.sh"
+octaveFigurePrefix="fig"
 prog="$(basename "$0")"
 cmd_usage="usage: $(basename "$0") [Path to latex file] [OPTIONAL output DIRECTORY or FILE.pdf]"
 [ $# -lt 1 ] && { echo "$cmd_usage"; exit 1; }
@@ -19,8 +20,10 @@ cp -r "$proj_path" "$temp_dir" || { echo "$prog: Can't copy project files!"; \
 cd "$(find "$temp_dir" -type f -name "$doc_name.tex" -exec dirname {} \; -quit)" \
     || { echo "$prog: cannot find $doc_name.tex"; exit 1; }
 src_dir="$(pwd)"
-find . -type f -name '*.m' -exec octave --no-gui --norc -q -H {} \+ \
-    || echo "$prog: Can't compile octave figures!"
+find . -type f -name "$octaveFigurePrefix*.m" -exec octave --no-gui --norc -q -H {} \; \
+    || { echo "$prog: Can't compile octave figures!"; }
+# clean up intermediate figure files
+# find . -type f -name "fig*.tex" -exec rm {} \+
 pdflatex -halt-on-error -output-directory="$src_dir" "$doc_name.tex" \
     || { echo "$prog: Can't compile document (pass 1)!"; exit 1; }
 biber --input-directory "$src_dir" --output-directory "$src_dir" "$doc_name" \
