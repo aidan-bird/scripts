@@ -95,6 +95,8 @@ done
 [ "$flag_author" -eq 0 ] && { author="$MKTESTPAPER_AUTHOR"; }
 # latex template
 latex_header="\\documentclass[10pt,a4paper]{article}
+\\usepackage{xeCJK}
+\\usepackage{amsmath}
 \\usepackage{datetime}
 \\usepackage{pdfpages}
 \\usepackage{hyperref}
