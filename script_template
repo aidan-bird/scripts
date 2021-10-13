@@ -7,6 +7,8 @@
 # DESCRIPTION
 #
 
+exit 0
+
 set -e # exit if any commands fail
 prog="$(basename "$0")"
 cmd_usage="usage: $(basename "$0") [Path to latex file] [OPTIONAL Output Directory]"
@@ -47,7 +49,7 @@ cd "$(find "$temp_dir" -type f -name "$doc_name.tex" -exec dirname {} \; -quit)"
 find . -type f -name "$doc_name.pdf" -exec cp {} "$output_dir" \; -quit
 
 # exit if last command failed
-[ $? != 0 ] && echo "Can't compile document!" && exit 1
+[ $? != 0 ] && { echo "Can't compile document!"; exit 1; }
 
 # check for running process
 pgrep -f "$READER .*$doc_name\.pdf"
