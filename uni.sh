@@ -5,4 +5,6 @@
 # open the university's login page
 #
 
-nohup "$BROWSER" "$UNI_URL" >/dev/null 2>&1 &
+basicbrowser.sh "$UNI_URL"
+
+#nohup "$BROWSER" "$UNI_URL" >/dev/null 2>&1 &

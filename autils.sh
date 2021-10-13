@@ -74,3 +74,9 @@ getOutputFilePath() {
     return 0
 }
 
+getFocusedWindowPID() {
+    echo "$(xprop -id "$(xprop -root \
+        | grep -m 1 -i "_NET_ACTIVE_WINDOW(WINDOW): window id #" \
+        | sed "s/^.*# //")" | grep PID | sed "s/^.* = //")"
+}
+
