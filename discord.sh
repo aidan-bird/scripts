@@ -5,6 +5,11 @@
 # open discord's web app
 #
 
-basicbrowser.sh "discordapp.com/login"
+DISCORDAPP='discordapp.com/login'
 
-# nohup "$BROWSER" "discordapp.com/login" >/dev/null 2>&1 &
+if [ "$USE_BASICBROWSER" = true ];
+then
+    basicbrowser.sh "$DISCORDAPP"
+else
+    nohup "$BROWSER" "$DISCORDAPP" >/dev/null 2>&1 &
+fi
