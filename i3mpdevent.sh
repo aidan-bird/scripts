@@ -10,7 +10,7 @@
 while [ 1 ]
 do
 mpc idle player
-pkill -RTMIN+11 dwmblocks
+pkill -RTMIN+11 $STATUSBAR
 current_song="$(mpc current -f "[[%artist% - ]%title%]|[%file%]")"
 if [ "$last_song" != "$current_song" ]
 then

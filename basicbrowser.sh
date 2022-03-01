@@ -7,7 +7,7 @@
 #
 
 . "$(dirname "$0")/autils.sh"
-browser_name="waterfox-current"
+browser_name="librewolf"
 profile_name="basic"
 url="about:blank"
 [ ! -z "$1" ] && { url="$1"; }
@@ -20,14 +20,14 @@ then
     if [ $? == 0 ]
     then
         echo "opening new tab"
-        $BROWSER -P "$profile_name" --new-tab "$url"
+        $browser_name -P "$profile_name" --new-tab "$url"
     else
         echo "opening new window"
-        $BROWSER -P "$profile_name" --new-window "$url"
+        $browser_name -P "$profile_name" --new-window "$url"
     fi
 else
     echo "opening new instance"
-    $BROWSER --new-instance -P "$profile_name" "$url" &
+    $browser_name --new-instance -P "$profile_name" "$url" &
     disown
 fi
 exit 0

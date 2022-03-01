@@ -11,4 +11,4 @@ case $1 in
 	2)  	# volmute
 		[ "$(pamixer --get-mute)" = "true" ] && pamixer -u || pamixer -m;;
 esac
-pkill -RTMIN+10 dwmblocks
+pkill -RTMIN+10 $STATUSBAR
