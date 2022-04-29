@@ -8,7 +8,7 @@
 . "$(dirname "$0")/autils.sh"
 octaveFigurePrefix="fig"
 prog="$(basename "$0")"
-cmd_usage="usage: $(basename "$0") [Path to latex file] [OPTIONAL output DIRECTORY or FILE.pdf]"
+cmd_usage="usage: $prog [Path to latex file] [OPTIONAL output DIRECTORY or FILE.pdf]"
 [ $# -lt 1 ] && { echo "$cmd_usage"; exit 1; }
 doc_name="$(basename "$1" '.tex')"
 output_dir="$(getOutputFilePath "$2" ".pdf" "$doc_name")"
