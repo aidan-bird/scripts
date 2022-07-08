@@ -9,7 +9,7 @@
 #
 
 . "$(dirname "$0")/autils.sh"
-music_dir="/sftp/Music"
+music_dir="/home/da5vid/Music"
 notification_base_cmd="dunstify -u normal -t 2000 -h \
     string:x-dunst-stack-tag:test"
 prog="$(basename "$0")"
